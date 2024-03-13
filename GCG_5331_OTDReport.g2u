@@ -1,0 +1,506 @@
+Program.Sub.ScreenSU.Start
+Gui.FormOTDReport..Create
+Gui.FormOTDReport..Caption("On-Time Delivery")
+Gui.FormOTDReport..Size(4365,6960)
+Gui.FormOTDReport..MinX(0)
+Gui.FormOTDReport..MinY(0)
+Gui.FormOTDReport..Position(0,0)
+Gui.FormOTDReport..BackColor(-2147483633)
+Gui.FormOTDReport..MousePointer(0)
+Gui.FormOTDReport..MaxButton(False)
+Gui.FormOTDReport..Sizeable(False)
+Gui.FormOTDReport..Event(UnLoad,FormOTDReport_UnLoad)
+Gui.FormOTDReport.dtpFrom.Create(DatePicker)
+Gui.FormOTDReport.dtpFrom.Size(1905,285)
+Gui.FormOTDReport.dtpFrom.Position(105,420)
+Gui.FormOTDReport.dtpFrom.TabStop(True)
+Gui.FormOTDReport.dtpFrom.TabIndex(1)
+Gui.FormOTDReport.lblFrom.Create(Label,"From :",True,1935,255,0,90,210,True,0,"Arial",8,-2147483633,0)
+Gui.FormOTDReport.lblTo.Create(Label,"To :",True,1935,255,0,2130,210,True,0,"Arial",8,-2147483633,0)
+Gui.FormOTDReport.dtpTo.Create(DatePicker)
+Gui.FormOTDReport.dtpTo.Size(1950,285)
+Gui.FormOTDReport.dtpTo.Position(2160,420)
+Gui.FormOTDReport.dtpTo.TabStop(True)
+Gui.FormOTDReport.dtpTo.TabIndex(2)
+Gui.FormOTDReport.chkAllDates.Create(CheckBox)
+Gui.FormOTDReport.chkAllDates.Size(1080,360)
+Gui.FormOTDReport.chkAllDates.Position(1635,855)
+Gui.FormOTDReport.chkAllDates.Caption("All Dates")
+Gui.FormOTDReport.chkAllDates.Event(Click,chkAllDates_Click)
+Gui.FormOTDReport.chkAllDates.TabStop(True)
+Gui.FormOTDReport.chkAllDates.TabIndex(3)
+Gui.FormOTDReport.gsgcVENDORs.Create(GsGridControl)
+Gui.FormOTDReport.gsgcVENDORs.Size(4080,3240)
+Gui.FormOTDReport.gsgcVENDORs.Position(75,2520)
+Gui.FormOTDReport.gsgcVENDORs.TabStop(True)
+Gui.FormOTDReport.gsgcVENDORs.TabIndex(10)
+Gui.FormOTDReport.lblVENDORs.Create(Label,"Vendors",True,930,255,0,1650,1470,True,0,"Arial",8,-2147483633,0)
+Gui.FormOTDReport.txtFrom.Create(TextBox,"",True,1200,300,0,480,1725,True,0,"Arial",8,-2147483643,1)
+Gui.FormOTDReport.txtFrom.Event(LostFocus,txtFrom_LostFocus)
+Gui.FormOTDReport.txtFrom.TabStop(True)
+Gui.FormOTDReport.txtFrom.TabIndex(4)
+Gui.FormOTDReport.txtTo.Create(TextBox,"",True,1200,300,0,2565,1725,True,0,"Arial",8,-2147483643,1)
+Gui.FormOTDReport.txtTo.Event(LostFocus,txtTo_LostFocus)
+Gui.FormOTDReport.txtTo.TabStop(True)
+Gui.FormOTDReport.txtTo.TabIndex(6)
+Gui.FormOTDReport.lblVENDORFrom.Create(Label,"From",True,480,255,0,30,1815,True,0,"Arial",8,-2147483633,0)
+Gui.FormOTDReport.lblVENDORTo.Create(Label,"To",True,330,255,0,2295,1815,True,0,"Arial",8,-2147483633,0)
+Gui.FormOTDReport.cmdVENDORFromBrowser.Create(Button)
+Gui.FormOTDReport.cmdVENDORFromBrowser.Size(375,375)
+Gui.FormOTDReport.cmdVENDORFromBrowser.Position(1725,1695)
+Gui.FormOTDReport.cmdVENDORFromBrowser.Caption("^")
+Gui.FormOTDReport.cmdVENDORFromBrowser.Event(Click,cmdVENDORFromBrowser_Click)
+Gui.FormOTDReport.cmdVENDORFromBrowser.TabStop(True)
+Gui.FormOTDReport.cmdVENDORFromBrowser.TabIndex(5)
+Gui.FormOTDReport.cmdVENDORToBrowser.Create(Button)
+Gui.FormOTDReport.cmdVENDORToBrowser.Size(375,375)
+Gui.FormOTDReport.cmdVENDORToBrowser.Position(3825,1680)
+Gui.FormOTDReport.cmdVENDORToBrowser.Caption("^")
+Gui.FormOTDReport.cmdVENDORToBrowser.Event(Click,cmdVENDORToBrowser_Click)
+Gui.FormOTDReport.cmdVENDORToBrowser.TabStop(True)
+Gui.FormOTDReport.cmdVENDORToBrowser.TabIndex(7)
+Gui.FormOTDReport.cmdAdd.Create(Button)
+Gui.FormOTDReport.cmdAdd.Size(990,375)
+Gui.FormOTDReport.cmdAdd.Position(1050,2115)
+Gui.FormOTDReport.cmdAdd.Caption("Add")
+Gui.FormOTDReport.cmdAdd.Event(Click,cmdAdd_Click)
+Gui.FormOTDReport.cmdAdd.TabStop(True)
+Gui.FormOTDReport.cmdAdd.TabIndex(8)
+Gui.FormOTDReport.cmdRemove.Create(Button)
+Gui.FormOTDReport.cmdRemove.Size(990,375)
+Gui.FormOTDReport.cmdRemove.Position(2130,2115)
+Gui.FormOTDReport.cmdRemove.Caption("Remove")
+Gui.FormOTDReport.cmdRemove.Event(Click,cmdRemove_Click)
+Gui.FormOTDReport.cmdRemove.TabStop(True)
+Gui.FormOTDReport.cmdRemove.TabIndex(9)
+Gui.FormOTDReport.chkAllVENDORs.Create(CheckBox)
+Gui.FormOTDReport.chkAllVENDORs.Size(1560,360)
+Gui.FormOTDReport.chkAllVENDORs.Position(1455,5820)
+Gui.FormOTDReport.chkAllVENDORs.Caption("All Vendors")
+Gui.FormOTDReport.chkAllVENDORs.Event(Click,chkAllVENDORs_Click)
+Gui.FormOTDReport.chkAllVENDORs.TabStop(True)
+Gui.FormOTDReport.chkAllVENDORs.TabIndex(11)
+Gui.FormOTDReport.cmdDone.Create(Button)
+Gui.FormOTDReport.cmdDone.Size(990,375)
+Gui.FormOTDReport.cmdDone.Position(1590,6225)
+Gui.FormOTDReport.cmdDone.Caption("Done")
+Gui.FormOTDReport.cmdDone.Event(Click,cmdDone_Click)
+Gui.FormOTDReport.cmdDone.TabStop(True)
+Gui.FormOTDReport.cmdDone.TabIndex(12)
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+'GCG_5332_OTDReport.g2u
+'Trey S
+'12/20/2018
+'For Controlled Fluids
+'This is a preprocessor for a report comparing actual ship date with item promise date
+'Actual ship date is stored by GCG_5331_Receive
+
+F.Intrinsic.Control.Try
+V.Local.sError.Declare
+
+F.Intrinsic.Control.CallSub(LoadGrid)
+GUI.FormOTDReport..Show
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End 
+F.Intrinsic.Control.EndTry
+Program.Sub.Main.End
+
+Program.Sub.LoadGrid.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare
+
+F.Data.DataTable.Create("dtVENDORs", True)
+F.Data.DataTable.AddColumn("dtVENDORs", "From", "String")
+F.Data.DataTable.AddColumn("dtVENDORs", "To", "String")
+
+GUI.FormOTDReport.gsgcVENDORs.AddGridviewFromDatatable("gvVENDORs", "dtVENDORs")
+
+GUI.FormOTDReport.gsgcVENDORs.SetColumnProperty("gvVENDORs", "From", "HeaderFontBold", True)
+GUI.FormOTDReport.gsgcVENDORs.SetColumnProperty("gvVENDORs", "To", "HeaderFontBold", True)
+GUI.FormOTDReport.gsgcVENDORs.SetColumnProperty("gvVENDORs", "From", "AllowEdit", False)
+GUI.FormOTDReport.gsgcVENDORs.SetColumnProperty("gvVENDORs", "To", "AllowEdit", False)
+GUI.FormOTDReport.gsgcVENDORs.SetGridviewProperty("gvVENDORs", "MultiSelect", False)
+GUI.FormOTDReport.gsgcVENDORs.MainView("gvVENDORs")
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End 
+F.Intrinsic.Control.EndTry
+Program.Sub.LoadGrid.End
+
+Program.Sub.chkAllDates_Click.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare
+
+GUI.FormOTDReport.dtpFrom.Enabled(V.Screen.FormOTDReport!chkAllDates.checkedAsBoolean.Not)
+GUI.FormOTDReport.dtpTo.Enabled(V.Screen.FormOTDReport!chkAllDates.checkedAsBoolean.Not)
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End 
+F.Intrinsic.Control.EndTry
+Program.Sub.chkAllDates_Click.End
+
+Program.Sub.cmdVENDORToBrowser_Click.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare
+
+V.Local.sRet.Declare(String)
+
+GUI.FormOTDReport.cmdVENDORToBrowser.Enabled(False)
+
+F.Intrinsic.UI.Browser(300, "", V.Local.sRet)
+F.Intrinsic.Control.If(V.Local.sRet.IsNotCancel)
+	F.Intrinsic.String.Split(V.Local.sRet, "*!*", V.Local.sRet)
+	GUI.FormOTDReport.txtTo.Text(V.Local.sRet(0))
+	F.Intrinsic.Control.If(V.Screen.FormOTDReport!txtFrom.Text.Trim, =, "")
+		GUI.FormOTDReport.txtFrom.Text(V.Local.sRet(0))
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndIf
+
+GUI.FormOTDReport.cmdVENDORToBrowser.Enabled(True)
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End 
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdVENDORToBrowser_Click.End
+
+Program.Sub.cmdVENDORFromBrowser_Click.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare
+
+V.Local.sRet.Declare(String)
+
+GUI.FormOTDReport.cmdVENDORFromBrowser.Enabled(False)
+
+F.Intrinsic.UI.Browser(300, "", V.Local.sRet)
+F.Intrinsic.Control.If(V.Local.sRet.IsNotCancel)
+	F.Intrinsic.String.Split(V.Local.sRet, "*!*", V.Local.sRet)
+	GUI.FormOTDReport.txtFrom.Text(V.Local.sRet(0))
+	F.Intrinsic.Control.If(V.Screen.FormOTDReport!txtTo.Text.Trim, =, "")
+		GUI.FormOTDReport.txtTo.Text(V.Local.sRet(0))
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndIf
+
+GUI.FormOTDReport.cmdVENDORFromBrowser.Enabled(True)
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End 
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdVENDORFromBrowser_Click.End
+
+Program.Sub.FormOTDReport_UnLoad.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare
+
+F.Intrinsic.Control.End
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End 
+F.Intrinsic.Control.EndTry
+Program.Sub.FormOTDReport_UnLoad.End
+
+Program.Sub.txtTo_LostFocus.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare
+
+V.Local.sSQL.Declare(String)
+V.Local.sRet.Declare(String)
+V.Local.sSQL.Set(V.Screen.FormOTDReport!txtTo.Text.Trim)
+
+F.Intrinsic.Control.If(V.Local.sSQL.Trim, !=, "")
+	GUI.FormOTDReport.txtTo.Enabled(False)
+	F.Intrinsic.String.Build("select upper(VENDOR) from V_VENDOR_MASTER where VENDOR = '{0}'", V.Local.sSQL.UCase, V.Local.sSQL)
+	F.ODBC.Connection!ToCon.OpenCompanyConnection
+	F.ODBC.Connection!ToCon.ExecuteAndReturn(V.Local.sSQL, V.Local.sRet)
+	F.Intrinsic.Control.If(V.Ambient.ExecuteAndReturnEOF)
+		F.Intrinsic.UI.Msgbox("Invalid VENDOR ID")
+		GUI.FormOTDReport.txtTo.Text("")
+	F.Intrinsic.Control.Else
+		GUI.FormOTDReport.txtTo.Text(V.Local.sRet)
+		F.Intrinsic.Control.If(V.Screen.FormOTDReport!txtFrom.Text.Trim, =, "")
+			GUI.FormOTDReport.txtFrom.Text(V.Local.sRet)
+		F.Intrinsic.Control.EndIf
+	F.Intrinsic.Control.EndIf
+	F.ODBC.Connection!ToCon.Close
+	GUI.FormOTDReport.txtTo.Enabled(True)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End 
+F.Intrinsic.Control.EndTry
+Program.Sub.txtTo_LostFocus.End
+
+Program.Sub.txtFrom_LostFocus.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare
+
+V.Local.sSQL.Declare(String)
+V.Local.sRet.Declare(String)
+V.Local.sSQL.Set(V.Screen.FormOTDReport!txtFrom.Text.Trim)
+
+F.Intrinsic.Control.If(V.Local.sSQL.Trim, !=, "")
+	GUI.FormOTDReport.txtFrom.Enabled(False)
+	F.Intrinsic.String.Build("select upper(VENDOR) from V_VENDOR_MASTER where VENDOR = '{0}'", V.Local.sSQL.UCase, V.Local.sSQL)
+	F.ODBC.Connection!FromCon.OpenCompanyConnection
+	F.ODBC.Connection!FromCon.ExecuteAndReturn(V.Local.sSQL, V.Local.sRet)
+	F.Intrinsic.Control.If(V.Ambient.ExecuteAndReturnEOF)
+		F.Intrinsic.UI.Msgbox("Invalid VENDOR ID")
+		GUI.FormOTDReport.txtFrom.Text("")
+	F.Intrinsic.Control.Else
+		GUI.FormOTDReport.txtFrom.Text(V.Local.sRet)
+		F.Intrinsic.Control.If(V.Screen.FormOTDReport!txtTo.Text.Trim, =, "")
+			GUI.FormOTDReport.txtTo.Text(V.Local.sRet)
+		F.Intrinsic.Control.EndIf
+	F.Intrinsic.Control.EndIf
+	F.ODBC.Connection!FromCon.Close
+	GUI.FormOTDReport.txtFrom.Enabled(True)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End 
+F.Intrinsic.Control.EndTry
+Program.Sub.txtFrom_LostFocus.End
+
+Program.Sub.chkAllVENDORs_Click.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare
+
+GUI.FormOTDReport.cmdAdd.Enabled(V.Screen.FormOTDReport!chkAllVENDORs.checkedAsBoolean.Not)
+GUI.FormOTDReport.cmdRemove.Enabled(V.Screen.FormOTDReport!chkAllVENDORs.checkedAsBoolean.Not)
+GUI.FormOTDReport.txtFrom.Enabled(V.Screen.FormOTDReport!chkAllVENDORs.checkedAsBoolean.Not)
+GUI.FormOTDReport.txtTo.Enabled(V.Screen.FormOTDReport!chkAllVENDORs.checkedAsBoolean.Not)
+GUI.FormOTDReport.gsgcVENDORs.Enabled(V.Screen.FormOTDReport!chkAllVENDORs.checkedAsBoolean.Not)
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End 
+F.Intrinsic.Control.EndTry
+Program.Sub.chkAllVENDORs_Click.End
+
+Program.Sub.cmdRemove_Click.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare
+
+V.Local.iIndex.Declare(Long)
+
+F.Intrinsic.Control.If(V.DataTable.dtVENDORs.RowCount, >, 0)
+	GUI.FormOTDReport.gsgcVENDORs.GetSelectedRows("gvVENDORs", V.Local.iIndex)
+	F.Data.DataTable.DeleteRow("dtVENDORs", V.Local.iIndex)
+	F.Data.DataTable.AcceptChanges("dtVENDORs")
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End 
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdRemove_Click.End
+
+Program.Sub.cmdAdd_Click.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare
+
+F.Intrinsic.Control.If(V.Screen.FormOTDReport!txtFrom.Text.Trim, !=, "", and, V.Screen.FormOTDReport!txtTo.Text.Trim, !=, "")
+	GUI.FormOTDReport.cmdAdd.Enabled(False)
+	F.Data.DataTable.AddRow("dtVENDORs", "From", V.Screen.FormOTDReport!txtFrom.Text.Trim, "To", V.Screen.FormOTDReport!txtTo.Text.Trim)
+	GUI.FormOTDReport.txtFrom.Text("")
+	GUI.FormOTDReport.txtTo.Text("")
+	GUI.FormOTDReport.cmdAdd.Enabled(True)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End 
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdAdd_Click.End
+
+Program.Sub.cmdDone_Click.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare
+
+V.Local.sDateFilter.Declare(String)
+V.Local.sVENDORFilter.Declare(String)
+V.Local.sSQL.Declare(String)
+V.Local.iCounter.Declare(Long)
+V.Local.dFrom.Declare(Date)
+V.Local.dTo.Declare(Date)
+V.Local.sFilter.Declare(String)
+V.Local.iBIRun.Declare(Long)
+V.Local.iBILog.Declare(Long)
+V.Local.sOrderFilter.Declare(String)
+V.Local.bInString.Declare(Boolean)
+V.Local.sParams.Declare(String)
+V.Local.sParamNames.Declare(String)
+V.Local.iTotalOrders.Declare(Long)
+V.Local.fTotalQty.Declare(Float)
+V.Local.sDateRange.Declare(String)
+V.Local.sVENDORRange.Declare(String)
+
+GUI.FormOTDReport..Enabled(False)
+
+F.Global.BI.GetRunID(V.Local.iBIRun)
+F.Global.BI.StartLogging(V.Local.iBIRun, -1, -1 "", V.Local.iBILog)
+
+'build date filter
+F.Intrinsic.Control.If(V.Screen.FormOTDReport!chkAllDates.checkedAsBoolean)
+	V.Local.sDateFilter.Set("")
+F.Intrinsic.Control.Else
+	V.Local.dFrom.Set(V.Screen.FormOTDReport!dtpFrom.Value)
+	V.Local.dTo.Set(V.Screen.FormOTDReport!dtpTo.Value)
+	F.Intrinsic.String.Build("ACTUAL_RECEIVE_DATE >= '{0}' and ACTUAL_RECEIVE_DATE <= '{1}'", V.Local.dFrom.FormatYYYY-MM-DD, V.Local.dTo.FormatYYYY-MM-DD, V.Local.sDateFilter)
+F.Intrinsic.Control.EndIf
+
+V.Local.sSQL.Set("select RTRIM(ORDER_NUMBER) as ORDER_NUMBER, RTRIM(ORDER_LINE) as ORDER_LINE, RECEIVE_DATE, ACTUAL_RECEIVE_DATE, QTY, QTY_ORDERED, RTRIM(REC_TIME) AS REC_TIME from GCG_5331_Receive")
+F.Intrinsic.Control.If(V.Local.sDateFilter.Trim, !=, "")
+	F.Intrinsic.String.Build("{0} where {1}", V.Local.sSQL, V.Local.sDateFilter, V.Local.sSQL)
+F.Intrinsic.Control.EndIf
+
+F.ODBC.Connection!Con.OpenCompanyConnection
+F.Data.DataTable.CreateFromSQL("dtActualReceive", "Con", V.Local.sSQL)
+
+'maybe get VENDORs based off of what's in dates for performance, can't really do that though since it's a range
+
+'build VENDOR filter
+F.Data.DataTable.AcceptChanges("dtVENDORs")
+F.Intrinsic.Control.If(V.Screen.FormOTDReport!chkAllVENDORs.checkedAsBoolean)
+	V.Local.sVENDORFilter.Set("")
+F.Intrinsic.Control.Else
+	F.Intrinsic.Control.If(V.DataTable.dtVENDORs.RowCount, <=, 0)
+		V.Local.sVENDORFilter.Set("VENDOR = ''")
+	F.Intrinsic.Control.Else
+		F.Intrinsic.String.Build("(VENDOR between '{0}' and '{1}')", V.DataTable.dtVENDORs(0).From!FieldValTrim, V.DataTable.dtVENDORs(0).To!FieldValTrim, V.Local.sVENDORFilter)
+		F.Intrinsic.String.Build("{0} - {1}", V.DataTable.dtVENDORs(0).From!FieldValTrim, V.DataTable.dtVENDORs(0).To!FieldValTrim, V.Local.sVENDORRange)
+		F.Intrinsic.Control.For(V.Local.iCounter, 1, V.DataTable.dtVENDORs.RowCount--, 1)
+			F.Intrinsic.String.Build("{2} or (VENDOR between '{0}' and '{1}')", V.DataTable.dtVENDORs(V.Local.iCounter).From!FieldValTrim, V.DataTable.dtVENDORs(V.Local.iCounter).To!FieldValTrim, V.Local.sVENDORFilter, V.Local.sVENDORFilter)
+			F.Intrinsic.String.Build("{2}{3}{0} - {1}", V.DataTable.dtVENDORs(V.Local.iCounter).From!FieldValTrim, V.DataTable.dtVENDORs(V.Local.iCounter).To!FieldValTrim, V.Local.sVENDORRange, ", ", V.Local.sVENDORRange)
+		F.Intrinsic.Control.Next(V.Local.iCounter)
+	F.Intrinsic.Control.EndIf
+	
+F.Intrinsic.Control.EndIf
+
+'this is better but gab is broken and this doesn't work, when the for doesn't execute the else does
+'F.Intrinsic.Control.If(V.Screen.FormOTDReport!chkAllVENDORs.checkedAsBoolean)
+'	V.Local.sVENDORFilter.Set("")
+'F.Intrinsic.Control.Else
+'	F.Intrinsic.Control.If(V.DataTable.dtVENDORs.RowCount, >, 0)
+'		F.Intrinsic.String.Build("(VENDOR between '{0}' and '{1}')", V.DataTable.dtVENDORs(0).From!FieldValTrim, V.DataTable.dtVENDORs(0).To!FieldValTrim, V.Local.sVENDORFilter)
+'		F.Intrinsic.Control.For(V.Local.iCounter, 1, V.DataTable.dtVENDORs.RowCount--, 1)
+'			F.Intrinsic.String.Build("{2} or (VENDOR between '{0}' and '{1}')", V.DataTable.dtVENDORs(V.Local.iCounter).From!FieldValTrim, V.DataTable.dtVENDORs(V.Local.iCounter).To!FieldValTrim, V.Local.sVENDORFilter, V.Local.sVENDORFilter)
+'		F.Intrinsic.Control.Next(V.Local.iCounter)
+'	F.Intrinsic.Control.Else
+'		V.Local.sVENDORFilter.Set("VENDOR = ''")
+'	F.Intrinsic.Control.EndIf
+'	
+'F.Intrinsic.Control.EndIf
+
+V.Local.sSQL.Set("select RTRIM(PURCHASE_ORDER) as ORDER_NO, SUBSTRING(RECORD_NO, 1, 3) as LINE, RTRIM(VENDOR) as VENDOR, QTY_ORDER, QTY_RECEIVED, DATE_DUE_LINE from V_PO_LINES")
+F.Intrinsic.Control.If(V.Local.sVENDORFilter.Trim, !=, "")
+	F.Intrinsic.String.Build("{0} where {1}", V.Local.sSQL, V.Local.sVENDORFilter, V.Local.sSQL)
+F.Intrinsic.Control.EndIf
+F.Data.DataTable.CreateFromSQL("dtReceipts", "Con", V.Local.sSQL)
+
+'F.Data.Linq.Join("InnerJoin", "DataTable", "dtActualReceive*!*A", "DataTable", "dtReceipts*!*B", "A.PACKING_LIST = B.PCK_NO and A.ORDER_NUMBER = B.ORDER_NO and A.ORDER_LINE = B.ORDER_REC and A.ORDER_SUFFIX = B.ORDER_SUFFIX", "A.ORDER_NUMBER*!*A.ORDER_LINE*!*A.ORDER_SUFFIX*!*A.PACKING_LIST*!*A.SHIP_DATE*!*A.ACTUAL_RECEIVE_DATE*!*B.VENDOR*!*B.QTY_ORDERED*!*B.QTY_SHIPPED", "", "", "", "dtReport", True)
+F.Data.Linq.Join("InnerJoin", "DataTable", "dtActualReceive*!*A", "DataTable", "dtReceipts*!*B", "A.ORDER_NUMBER = B.ORDER_NO and A.ORDER_LINE = B.LINE", "A.ORDER_NUMBER*!*A.ORDER_LINE*!*B.DATE_DUE_LINE*!*A.ACTUAL_RECEIVE_DATE*!*B.VENDOR*!*B.QTY_ORDER*!*A.QTY as QTY_RECEIVED*!*A.REC_TIME", "", "", "", "dtReport", True)
+
+F.Intrinsic.Control.If(V.DataTable.dtReport.RowCount, =, 0)
+	F.Intrinsic.UI.Msgbox("No records to print")
+	F.Intrinsic.Control.CallSub(FormOTDReport_UnLoad)
+F.Intrinsic.Control.EndIf
+
+'F.Data.DataTable.AddColumn("dtReport", "VENDOR_PO", "String")
+F.Data.DataTable.AddColumn("dtReport", "PART", "String")
+F.Data.DataTable.AddColumn("dtReport", "NAME_VENDOR", "String")
+
+'row count is greater than 0 if we're here at all
+'get VENDOR names
+F.Intrinsic.Control.If(V.Local.sVENDORFilter.Trim, !=, "")
+	F.Intrinsic.String.Build("select RTRIM(VENDOR) as VENDOR, RTRIM(NAME_VENDOR) as NAME_VENDOR from V_VENDOR_MASTER where {0}", V.Local.sVENDORFilter, V.Local.sSQL)
+F.Intrinsic.Control.Else
+	V.Local.sSQL.Set("select RTRIM(VENDOR) as VENDOR, RTRIM(NAME_VENDOR) as NAME_VENDOR from V_VENDOR_MASTER")
+F.Intrinsic.Control.EndIf
+F.Data.Dictionary.CreateFromSQL("dictVENDORs", "Con", V.Local.sSQL)
+F.Data.Dictionary.SetDefaultReturn("dictVENDORs", "")
+F.Data.DataTable.FillFromDictionary("dtReport", "dictVENDORs", "VENDOR", "NAME_VENDOR")
+F.Data.Dictionary.Close("dictVENDORs")
+
+''build order filter
+F.Intrinsic.String.Build("PURCHASE_ORDER = '{0}'", V.DataTable.dtReport(0).ORDER_NUMBER!FieldValTrim, V.Local.sOrderFilter)
+V.Local.iTotalOrders.Set(1)
+V.Local.fTotalQty.Set(V.DataTable.dtReport(0).QTY_RECEIVED!FieldValFloat)
+F.Intrinsic.Control.For(V.Local.iCounter, 1, V.DataTable.dtReport.RowCount--, 1)
+	F.Intrinsic.String.IsInString(V.Local.sOrderFilter, V.DataTable.dtReport(V.Local.iCounter).ORDER_NUMBER!FieldValTrim, True, V.Local.bInString)
+	F.Intrinsic.Control.If(V.Local.bInString.Not)
+		F.Intrinsic.Math.Add(V.Local.iTotalOrders, 1, V.Local.iTotalOrders)
+		F.Intrinsic.String.Build("{1} or PURCHASE_ORDER = '{0}'", V.DataTable.dtReport(V.Local.iCounter).ORDER_NUMBER!FieldValTrim, V.Local.sOrderFilter, V.Local.sOrderFilter)
+	F.Intrinsic.Control.EndIf
+	F.Intrinsic.Math.Add(V.Local.fTotalQty, V.DataTable.dtReport(V.Local.iCounter).QTY_RECEIVED!FieldValFloat, V.Local.fTotalQty)
+F.Intrinsic.Control.Next(V.Local.iCounter)
+
+'get parts
+F.Data.DataTable.AddExpressionColumn("dtReport", "ORDER_ORDERLINE", "String", "ORDER_NUMBER + ORDER_LINE")
+F.Intrinsic.String.Build("select PURCHASE_ORDER + SUBSTRING(RECORD_NO, 1, 3) as ORDER_ORDERLINE, RTRIM(PART) from V_PO_LINES where {0}", V.Local.sOrderFilter, V.Local.sSQL)
+F.Data.Dictionary.CreateFromSQL("dictParts", "Con", V.Local.sSQL)
+F.Data.Dictionary.SetDefaultReturn("dictParts", "")
+F.Data.DataTable.FillFromDictionary("dtReport", "dictParts", "ORDER_ORDERLINE", "PART")
+F.Data.Dictionary.Close("dictParts")
+
+F.Data.DataTable.AddColumn("dtReport", "BIRUN", "LONG", V.Local.iBIRun)
+F.Data.DataTable.AddColumn("dtReport", "TERMINAL", "STRING", V.Caller.Terminal)
+'F.Data.DataTable.AddExpressionColumn("dtReport", "ONTIMEFLAG", "STRING", "IIF(SHIP_DATE > ACTUAL_RECEIVE_DATE, 'E', IIF(SHIP_DATE < ACTUAL_RECEIVE_DATE, 'L', 'O'))")
+F.Data.DataTable.AddExpressionColumn("dtReport", "ONTIMEFLAG", "STRING", "IIF(DATE_DUE_LINE > ACTUAL_RECEIVE_DATE, 'E', IIF(DATE_DUE_LINE < ACTUAL_RECEIVE_DATE, 'L', 'O'))")
+
+
+F.Intrinsic.String.Build("delete from GCG_5331_OTDReport where TERMINAL = '{0}'", V.Caller.Terminal, V.Local.sSQL)
+F.ODBC.Connection!Con.Execute(V.Local.sSQL)
+
+F.Data.DataTable.AddColumn("dtReport", "ADR_FORMAT", "String")
+F.Data.DataTable.SetValueFormat("dtReport", -1, "ACTUAL_RECEIVE_DATE", "ADR_FORMAT", "YYYY-MM-DD")
+
+F.Data.DataTable.AddColumn("dtReport", "DD_FORMAT", "String")
+F.Data.DataTable.SetValueFormat("dtReport", -1, "DATE_DUE_LINE", "DD_FORMAT", "YYYY-MM-DD")
+
+F.Data.DataTable.SaveToDB("dtReport", "Con", "GCG_5331_OTDReport", "TERMINAL*!*BIRUN*!*ORDER_NUMBER*!*ORDER_LINE*!*REC_TIME", 128, "TERMINAL@!@TERMINAL*!*BIRUN@!@BI_RUN*!*VENDOR@!@VENDOR*!*NAME_VENDOR@!@NAME_VENDOR*!*ORDER_NUMBER@!@ORDER_NO*!*ORDER_LINE@!@ORDER_LINE*!*PART@!@PART*!*QTY_ORDER@!@QTY_ORDERED*!*QTY_RECEIVED@!@QTY_RECEIVED*!*ADR_FORMAT@!@ACTUAL_DATE_RECEIVED*!*DD_FORMAT@!@DUE_DATE*!*ONTIMEFLAG@!@ONTIMEFLAG*!*REC_TIME@!@REC_TIME")
+
+F.ODBC.Connection!Con.Close
+F.Data.DataTable.Close("dtActualReceive")
+F.Data.DataTable.Close("dtReceipts")
+F.Data.DataTable.Close("dtVENDORs")
+F.Data.DataTable.Close("dtReport")
+
+V.Local.sParamNames.Set("ALL_CUSTOMERS*!*ALL_DATES*!*CUSTOMER_RANGE*!*DATE_RANGE*!*TOTALORDERS*!*TOTALQTY")
+F.Intrinsic.String.Build("{0} - {1}", V.Local.dFrom.FormatMM/DD/YYYY, V.Local.dTo.FormatMM/DD/YYYY, V.Local.sDateRange)
+F.Intrinsic.String.Build("{0}*!*{1}*!* {2}*!* {3}*!*{4}*!*{5}", V.Screen.FormOTDReport!chkAllVENDORs.checkedAsBoolean, V.Screen.FormOTDReport!chkAllDates.checkedAsBoolean, V.Local.sVENDORRange, V.Local.sDateRange, V.Local.iTotalOrders, V.Local.fTotalQty, V.Local.sParams)
+F.Global.BI.StopLogging(V.Local.iBILog)
+GUI.FormOTDReport..Visible(False)
+F.Global.BI.RunReportPreProcessor(V.Local.iBIRun, V.Local.iBILog, V.Local.sParamNames, V.Local.sParams, "", -1, True, "", -1, "", -1, "", "", V.Local.iBIRun)
+F.Intrinsic.Control.CallSub(FormOTDReport_UnLoad)
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End 
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdDone_Click.End
