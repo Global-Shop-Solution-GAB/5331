@@ -1,0 +1,425 @@
+Program.Sub.ScreenSU.Start
+Gui.FormActualReceiveDate..Create
+Gui.FormActualReceiveDate..Caption("Actual Receive Date")
+Gui.FormActualReceiveDate..Size(8925,6240)
+Gui.FormActualReceiveDate..MinX(0)
+Gui.FormActualReceiveDate..MinY(0)
+Gui.FormActualReceiveDate..Position(0,0)
+Gui.FormActualReceiveDate..BackColor(-2147483633)
+Gui.FormActualReceiveDate..MousePointer(0)
+Gui.FormActualReceiveDate..Event(UnLoad,FormActualReceiveDate_UnLoad)
+Gui.FormActualReceiveDate..AlwaysOnTop(True)
+Gui.FormActualReceiveDate.gsgcReceiveLines.Create(GsGridControl)
+Gui.FormActualReceiveDate.gsgcReceiveLines.Size(8925,5010)
+Gui.FormActualReceiveDate.gsgcReceiveLines.Position(0,1035)
+Gui.FormActualReceiveDate.gsgcReceiveLines.Event(RowClick,GsGridControl1_RowClick)
+Gui.FormActualReceiveDate.gsgcReceiveLines.Anchor(15)
+Gui.FormActualReceiveDate.lblInstructions.Create(Label,"Enter the Actual Receive Date for each line :",True,3060,255,0,60,135,True,0,"Arial",8,-2147483633,0)
+Gui.FormActualReceiveDate.dtpActual.Create(DatePicker)
+Gui.FormActualReceiveDate.dtpActual.Size(1935,285)
+Gui.FormActualReceiveDate.dtpActual.Position(5340,600)
+Gui.FormActualReceiveDate.dtpActual.Event(Change,dtpActual_Change)
+Gui.FormActualReceiveDate.dtpActual.Anchor(9)
+'Gui.FormActualReceiveDate.dtpActual.Event(LostFocus,dtpActual_Change)
+Gui.FormActualReceiveDate.chkSameDate.Create(CheckBox)
+Gui.FormActualReceiveDate.chkSameDate.Size(1335,360)
+Gui.FormActualReceiveDate.chkSameDate.Position(7380,570)
+Gui.FormActualReceiveDate.chkSameDate.Caption("Same For All")
+Gui.FormActualReceiveDate.chkSameDate.Value(1)
+Gui.FormActualReceiveDate.chkSameDate.Anchor(9)
+Gui.FormActualReceiveDate.ddlLine.Create(DropDownList)
+Gui.FormActualReceiveDate.ddlLine.Size(1410,330)
+Gui.FormActualReceiveDate.ddlLine.Position(570,600)
+Gui.FormActualReceiveDate.ddlLine.Event(Click,ddlLine_Click)
+Gui.FormActualReceiveDate.cmdDone.Create(Button)
+Gui.FormActualReceiveDate.cmdDone.Size(990,375)
+Gui.FormActualReceiveDate.cmdDone.Position(7695,45)
+Gui.FormActualReceiveDate.cmdDone.Caption("Done")
+Gui.FormActualReceiveDate.cmdDone.Event(Click,cmdDone_Click)
+Gui.FormActualReceiveDate.cmdDone.Anchor(9)
+Gui.FormActualReceiveDate.lblLine.Create(Label,"Line",True,465,255,0,90,690,True,0,"Arial",8,-2147483633,0)
+Gui.FormActualReceiveDate.lblDate.Create(Label,"Date",True,495,255,0,4815,705,True,0,"Arial",8,-2147483633,0)
+Gui.FormActualReceiveDate.lblDate.Anchor(9)
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+V.Global.sPackingList.Declare(String)
+V.Global.bNew.Declare(Boolean)
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare
+
+'GCG_5331_ActualRecieveDate.g2u
+'Trey S
+'12/19/2018
+'For Controlled Fluids
+'This program will prompt the user to enter an actual recieved date when receiving,
+'so that this can be compared against the system item promise date in GCG_5331_OTDReport
+
+'F.Intrinsic.Control.SelectCase(V.Caller.Hook)
+'	F.Intrinsic.Control.Case(28530)
+'		V.Global.bNew.Set(True)
+'		V.Global.sPackingList.Set(V.Passed.000168)
+'		F.Intrinsic.String.LPad(V.Global.sPackingList, "0", 7, V.Global.sPackingList)
+'		F.Intrinsic.Control.CallSub(LoadDataNew)
+'		F.Intrinsic.Control.CallSub(SetUpGrid)
+'		F.Intrinsic.Control.CallSub(dtpActual_Change)
+'	
+'	F.Intrinsic.Control.Case(25970)
+'		V.Global.sPackingList.Set(V.Passed.000003.Trim)
+'		F.Intrinsic.String.LPad(V.Global.sPackingList, "0", 7, V.Global.sPackingList)
+'		F.Intrinsic.Control.CallSub(LoadDataOpen)
+'		F.Intrinsic.Control.CallSub(SetUpGrid)
+'		
+'	F.Intrinsic.Control.CaseElse
+'		F.Intrinsic.Control.End
+'		
+'F.Intrinsic.Control.EndSelect
+
+F.Intrinsic.Control.SelectCase(V.Caller.Hook)
+	F.Intrinsic.Control.Case(15041)
+		F.Intrinsic.Control.CallSub(LoadDataNew)
+		F.Intrinsic.Control.CallSub(SetUpGrid)
+		F.Intrinsic.Control.CallSub(dtpActual_Change)
+F.Intrinsic.Control.EndSelect
+
+F.Intrinsic.Control.If(V.DataTable.dtReceiveLines.Exists)
+	F.Intrinsic.Control.If(V.DataTable.dtReceiveLines.RowCount, >, 0)
+		GUI.FormActualReceiveDate.ddlLine.ListIndex(0)
+		GUI.FormActualReceiveDate..Show
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End 
+F.Intrinsic.Control.EndTry
+Program.Sub.Main.End
+
+Program.Sub.LoadDataNew.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare
+
+V.Local.iRows.Declare(Long)
+V.Local.sTemp.Declare(String)
+V.Local.iCounter.Declare(Long)
+V.Local.dDate.Declare(Date)
+V.Local.sDateTemp.Declare(String)
+V.Local.sPO.Declare(String)
+V.Local.fReceived.Declare(Float)
+
+V.Local.sPO.Set(V.Passed.000002.Trim)
+F.Intrinsic.String.LPad(V.Local.sPO, "0", 7, V.Local.sPO)
+
+F.Intrinsic.BDF.Load("bdfReceiveLines", "AUX001")
+
+F.Data.DataTable.Create("dtReceiveLines", True)
+F.Data.DataTable.AddColumn("dtReceiveLines", "Order_NO", "String")
+F.Data.DataTable.AddColumn("dtReceiveLines", "Line", "String")
+F.Data.DataTable.AddColumn("dtReceiveLines", "Part", "Sting")
+F.Data.DataTable.AddColumn("dtReceiveLines", "QTY_ORDERED", "Float")
+F.Data.DataTable.AddColumn("dtReceiveLines", "QTY_RECEIVED", "Float")
+F.Data.DataTable.AddColumn("dtReceiveLines", "Receive_DATE", "Date")
+F.Data.DataTable.AddColumn("dtReceiveLines", "ACTUAL_Receive_DATE", "Date")
+
+F.Intrinsic.BDF.ReadRowCount("bdfReceiveLines", V.Local.iRows)
+F.Intrinsic.Math.Sub(V.Local.iRows, 1, V.Local.iRows)
+F.Intrinsic.Control.For(V.Local.iCounter, 0, V.Local.iRows, 1)
+	F.Intrinsic.BDF.ReadRow("bdfReceiveLines", V.Local.iCounter, V.Local.sTemp)
+	F.Intrinsic.String.Split(V.Local.sTemp, "|~|", V.Local.sTemp)
+	F.Intrinsic.Math.Add(V.Local.sTemp(14), V.Local.sTemp(13), V.Local.fReceived)
+	F.Intrinsic.Math.Sub(V.Local.fReceived, V.Local.sTemp(11), V.Local.fReceived)
+	F.Intrinsic.Control.If(V.Local.fReceived, >, 0)
+		'F.Intrinsic.String.Mid(V.Local.sTemp(9), 5, 2, V.Local.sDateTemp)
+		'F.Intrinsic.String.Build("{0}-{1}-{2}", V.Local.sTemp(9).Left4, V.Local.sDateTemp, V.Local.sTemp(9).Right2, V.Local.sDateTemp)
+		F.Intrinsic.Control.If(V.Local.sTemp(9).Trim, !=, "")
+			V.Local.dDate.Set(V.Local.sTemp(9).Trim)
+		F.Intrinsic.Control.Else
+			V.Local.dDate.Set(V.Ambient.Date)
+		F.Intrinsic.Control.EndIf
+		
+		F.Data.DataTable.AddRow("dtReceiveLines", "Line", V.Local.sTemp(0), "Part", V.Local.sTemp(1).Trim, "QTY_ORDERED", V.Local.sTemp(10).Trim, "QTY_RECEIVED", V.Local.fReceived, "Receive_DATE", V.Local.dDate, "Order_NO", V.Local.sPO)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.Next(V.Local.iCounter)
+
+GUI.FormActualReceiveDate.ddlLine.AddItems("DataTable", "dtReceiveLines", "Line", "Line")
+F.Data.DataTable.SetValueFormat("dtReceiveLines", -1, "Order_NO", "Order_NO", "0000000")
+F.Data.DataTable.SetValueFormat("dtReceiveLines", -1, "Line", "Line", "000")
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End 
+F.Intrinsic.Control.EndTry
+Program.Sub.LoadDataNew.End
+
+'Program.Sub.LoadDataOpen.Start
+'F.Intrinsic.Control.Try
+'V.Local.sError.Declare
+
+'V.Local.sSQL.Declare(String)
+
+'F.Intrinsic.String.Build("Select RTRIM(ORDER_NO) as Order_NO, SUBSTRING(ORDER_REC, 1, 3) as Line, RTRIM(PART) as PART, QTY_ORDERED, QTY_RECEIVED, CNV_SHIP_DATE as SHIP_DATE, ORDER_SUFFIX as ORDER_SUFFIX from V_SHIPMENT_LINES where PCK_NO = '{0}'", V.Global.sPackingList, V.Local.sSQL)
+
+'F.ODBC.Connection!Con.OpenCompanyConnection
+'F.Data.DataTable.CreateFromSQL("dtReceiveLines", "Con", V.Local.sSQL, True)
+
+'F.Data.DataTable.AddExpressionColumn("dtReceiveLines", "IDENT", "STRING", "Order_NO + ORDER_SUFFIX + LINE")
+'F.Intrinsic.String.Build("select ORDER_NUMBER + ORDER_SUFFIX + SUBSTRING(ORDER_LINE, 1, 3) as IDENT, ACTUAL_SHIP_DATE from GCG_5332_ActualShip where PACKING_LIST = '{0}'", V.Global.sPackingList, V.Local.sSQL)
+'F.Data.Dictionary.CreateFromSQL("dictShipDate", "Con", V.Local.sSQL)
+'F.Data.Dictionary.SetDefaultReturn("dictShipDate", V.Ambient.Date.FormatYYYY-MM-DD)
+'F.Data.DataTable.AddColumn("dtReceiveLines", "ACTUAL_SHIP_DATE", "Date")
+'F.Data.DataTable.FillFromDictionary("dtReceiveLines", "dictShipDate", "IDENT", "ACTUAL_SHIP_DATE")
+'F.Data.Dictionary.Close("dictShipDate")
+'F.ODBC.Connection!Con.Close
+
+'GUI.FormActualShipDate.ddlLine.AddItems("DataTable", "dtReceiveLines", "Line", "Line")
+'F.Data.DataTable.SetValueFormat("dtReceiveLines", -1, "Order_NO", "Order_NO", "0000000")
+'F.Data.DataTable.SetValueFormat("dtReceiveLines", -1, "Line", "Line", "000")
+
+'F.Intrinsic.Control.Catch
+'	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+'	F.Intrinsic.UI.Msgbox(V.Local.sError)
+'	F.Intrinsic.Control.End 
+'F.Intrinsic.Control.EndTry
+'Program.Sub.LoadDataOpen.End
+
+Program.Sub.SetUpGrid.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare
+
+GUI.FormActualReceiveDate.gsgcReceiveLines.AddGridviewFromDatatable("gvReceiveLines", "dtReceiveLines")
+
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "Line", "HeaderFontBold", True)
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "Part", "HeaderFontBold", True)
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "QTY_ORDERED", "HeaderFontBold", True)
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "QTY_RECEIVED", "HeaderFontBold", True)
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "Receive_DATE", "HeaderFontBold", True)
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "ACTUAL_Receive_DATE", "HeaderFontBold", True)
+
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "Line", "Caption", "Line")
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "Part", "Caption", "Part")
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "QTY_ORDERED", "Caption", "Order Qty")
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "QTY_RECEIVED", "Caption", "Receive Qty")
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "Receive_DATE", "Caption", "Receive Date")
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "ACTUAL_Receive_DATE", "Caption", "Actual Receive Date")
+
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "Line", "ReadOnly", True)
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "Part", "ReadOnly", True)
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "QTY_ORDERED", "ReadOnly", True)
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "QTY_RECEIVED", "ReadOnly", True)
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "Receive_DATE", "ReadOnly", True)
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "ACTUAL_Receive_DATE", "ReadOnly", True)
+
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "Line", "AllowEdit", False)
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "Part", "AllowEdit", False)
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "QTY_ORDERED", "AllowEdit", False)
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "QTY_RECEIVED", "AllowEdit", False)
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "Receive_DATE", "AllowEdit", False)
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "ACTUAL_Receive_DATE", "AllowEdit", False)
+
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "Line", "HeaderHAlignment", "Center")
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "Part", "HeaderHAlignment", "Center")
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "QTY_ORDERED", "HeaderHAlignment", "Center")
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "QTY_RECEIVED", "HeaderHAlignment", "Center")
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "Receive_DATE", "HeaderHAlignment", "Center")
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "ACTUAL_Receive_DATE", "HeaderHAlignment", "Center")
+
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "Line", "CellHAlignment", "Far")
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "Part", "CellHAlignment", "Far")
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "QTY_ORDERED", "CellHAlignment", "Far")
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "QTY_RECEIVED", "CellHAlignment", "Far")
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "Receive_DATE", "CellHAlignment", "Center")
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "ACTUAL_Receive_DATE", "CellHAlignment", "Center")
+
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "Line", "MinWidth", 30)
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "Part", "MinWidth", 80)
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "QTY_ORDERED", "MinWidth", 70)
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "QTY_RECEIVED", "MinWidth", 70)
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "Receive_DATE", "MinWidth", 80)
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "ACTUAL_Receive_DATE", "MinWidth", 120)
+
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "Receive_DATE", "DisplayCustomDateTime", "d")
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "ACTUAL_Receive_DATE", "DisplayCustomDateTime", "d")
+
+GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "Order_NO", "Visible", False)
+
+'F.Intrinsic.Control.If(V.Global.bNew.Not)
+'	GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "ORDER_SUFFIX", "Visible", False)
+'	GUI.FormActualReceiveDate.gsgcReceiveLines.SetColumnProperty("gvReceiveLines", "IDENT", "Visible", False)
+'F.Intrinsic.Control.EndIf
+
+GUI.FormActualReceiveDate.gsgcReceiveLines.MainView("gvReceiveLines")
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End 
+F.Intrinsic.Control.EndTry
+Program.Sub.SetUpGrid.End
+
+Program.Sub.FormActualReceiveDate_UnLoad.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare
+
+V.Passed.777777.Set(1)
+F.Intrinsic.Control.End
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End 
+F.Intrinsic.Control.EndTry
+Program.Sub.FormActualReceiveDate_UnLoad.End
+
+Program.Sub.dtpActual_Change.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare
+
+V.Local.iIndex.Declare(Long)
+V.Local.sSelect.Declare(String)
+
+F.Intrinsic.Control.If(V.Screen.FormActualReceiveDate!chkSameDate.checkedAsBoolean)
+	F.Data.DataTable.SetValue("dtReceiveLines", -1, "ACTUAL_Receive_DATE", V.Screen.FormActualReceiveDate!dtpActual.Value)
+F.Intrinsic.Control.Else
+
+	F.Intrinsic.String.Lpad(V.Screen.FormActualReceiveDate!ddlLine.Value, "0", 3, V.Local.sSelect)
+	F.Intrinsic.String.Build("LINE = '{0}'", V.Local.sSelect, V.Local.sSelect)
+	F.Data.DataTable.Select("dtReceiveLines", V.Local.sSelect, V.Local.iIndex)	
+	
+	'F.Intrinsic.Math.Sub(V.Screen.FormActualReceiveDate!ddlLine.Value, 1, V.Local.iIndex)
+	F.Data.DataTable.SetValue("dtReceiveLines", V.Local.iIndex, "ACTUAL_Receive_DATE", V.Screen.FormActualReceiveDate!dtpActual.Value)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End 
+F.Intrinsic.Control.EndTry
+Program.Sub.dtpActual_Change.End
+
+Program.Sub.GsGridControl1_RowClick.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare
+
+GUI.FormActualReceiveDate.ddlLine.ListIndex(V.Args.RowIndex)
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End 
+F.Intrinsic.Control.EndTry
+Program.Sub.GsGridControl1_RowClick.End
+
+Program.Sub.cmdDone_Click.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare
+
+V.Local.sSQL.Declare(String)
+V.Local.iCounter.Declare(Long)
+V.Local.sFilter.Declare(String)
+V.Local.bInString.Declare(Boolean)
+V.Local.bMultipleOrders.Declare(Boolean, False)
+V.Local.sSuffix.Declare(String)
+V.Local.sRet.Declare(String)
+V.Local.sExpression.Declare(String)
+V.Local.dDate.Declare(Date)
+V.Local.sTemp.Declare(String)
+
+GUI.FormActualReceiveDate..Enabled(False)
+
+'F.Data.DataTable.AddExpressionColumn("dtReceiveLines", "ORDER_REC", "STRING", "LINE + '0'")
+'F.Data.DataTable.AddExpressionColumn("dtReceiveLines", "LINE_COMPLETE", "BOOLEAN", "[QTY_RECEIVED] >= [QTY_ORDERED]")
+'F.Data.DataTable.AddColumn("dtReceiveLines", "PACKING_LIST", "String", V.Global.sPackingList)
+
+F.Data.DataTable.AddColumn("dtReceiveLines", "REC_TIME", "STRING", V.Ambient.Time.FormatHHNNSS)
+'F.Data.DataTable.AddExpressionColumn("dtReceiveLines", "FORMAT_DATE", "STRING", "SUBSTRING(ACTUAL_RECEIVE_DATE, 7, 4) + '-' + SUBSTRING(ACTUAL_RECEIVE_DATE, 4, 2) + '-' + SUBSTRING(ACTUAL_RECEIVE_DATE, 1, 2)")
+
+'need to get order suffix
+F.ODBC.Connection!Con.OpenCompanyConnection
+
+'F.Intrinsic.Control.If(V.Global.bNew)
+'	'possible to have multiple orders on the same shipment...
+'	F.Intrinsic.Control.If(V.DataTable.dtReceiveLines.RowCount, >, 0)
+'		F.Intrinsic.String.Build("ORDER_NO = '{0}'", V.DataTable.dtReceiveLines(0).ORDER_NO!FieldValTrim, V.Local.sFilter)
+'	F.Intrinsic.Control.EndIf
+'	
+'	F.Intrinsic.Control.For(V.Local.iCounter, 1, V.DataTable.dtReceiveLines.RowCount--, 1)
+'		F.Intrinsic.String.IsInString(V.Local.sFilter, V.DataTable.dtReceiveLines(V.Local.iCounter).ORDER_NO!FieldValTrim, True, V.Local.bInString)
+'		F.Intrinsic.Control.If(V.Local.bInString.Not)
+'			F.Intrinsic.String.Build("{1} or ORDER_NO = '{0}'", V.DataTable.dtReceiveLines(V.Local.iCounter).ORDER_NO!FieldValTrim, V.Local.sFilter, V.Local.sFilter)
+'			V.Local.bMultipleOrders.Set(True)
+'		F.Intrinsic.Control.EndIf
+'	F.Intrinsic.Control.Next(V.Local.iCounter)
+'	F.Intrinsic.String.Build("select ORDER_NO, MAX(ORDER_SUFFIX) from V_SHIPMENT_LINES where {0} group by ORDER_NO", V.Local.sFilter, V.Local.sSQL)
+'	F.ODBC.Connection!Con.ExecuteAndReturn(V.Local.sSQL, V.Local.sRet)
+'	
+'	F.Intrinsic.Control.If(V.Ambient.ExecuteAndReturnEOF)
+'		V.Local.sSuffix.Set("0000")
+'		F.Data.DataTable.AddColumn("dtReceiveLines", "ORDER_SUFFIX", "STRING", V.Local.sSuffix)
+'	F.Intrinsic.Control.Else
+'		F.Intrinsic.Control.If(V.Local.bMultipleOrders)
+'			'multiple orders on the same shipment
+'			F.Data.Dictionary.CreateFromSQL("dictSuffixes", "Con", V.Local.sSQL)
+'			F.Data.Dictionary.SetDefaultReturn("0000")
+'			F.Data.DataTable.AddColumn("dtReceiveLines", "ORDER_SUFFIX", "STRING")
+'			F.Data.DataTable.FillFromDictionary("dtReceiveLines", "dictSuffixes", "ORDER", "ORDER_SUFFIX")
+'			F.Data.Dictionary.Close("dictSuffixes")
+'		F.Intrinsic.Control.Else
+'			F.Intrinsic.String.Split(V.Local.sRet, "*!*", V.Local.sRet)
+'			F.Intrinsic.Math.Add(V.Local.sRet(1), 1, V.Local.sSuffix)
+'			F.Intrinsic.String.LPad(V.Local.sSuffix, "0", 4, V.Local.sSuffix)
+'			F.Data.DataTable.AddColumn("dtReceiveLines", "ORDER_SUFFIX", "STRING", V.Local.sSuffix)
+'		F.Intrinsic.Control.EndIf
+'	F.Intrinsic.Control.EndIf
+'F.Intrinsic.Control.EndIf
+
+'save to the table
+'F.Data.DataTable.SaveToDB("dtReceiveLines", "Con", "GCG_5332_ActualShip", "PACKING_LIST*!*ORDER_NO*!*ORDER_REC*!*ORDER_SUFFIX", 256, "Order_NO@!@ORDER_NUMBER*!*ORDER_REC@!@ORDER_LINE*!*SHIP_DATE@!@SHIP_DATE*!*ACTUAL_SHIP_DATE@!@ACTUAL_SHIP_DATE*!*QTY_RECEIVED@!@QTY*!*LINE_COMPLETE@!@LINE_COMPLETE*!*PACKING_LIST@!@PACKING_LIST*!*ORDER_SUFFIX@!@ORDER_SUFFIX")
+
+F.Data.DataTable.AddColumn("dtReceiveLines", "Date", "String")
+
+F.Intrinsic.Control.For(V.Local.iCounter, 0, V.DataTable.dtReceiveLines.RowCount--, 1)
+	V.Local.dDate.Set(V.DataTable.dtReceiveLines(V.Local.iCounter).ACTUAL_RECEIVE_DATE!FieldValTrim)
+	F.Data.DataTable.SetValue("dtReceiveLines", V.Local.iCounter, "Date", V.Local.dDate.FormatYYYY-MM-DD)
+	
+F.Intrinsic.Control.Next(V.Local.iCounter)
+
+F.Data.DataTable.SaveToDB("dtReceiveLines", "Con", "GCG_5331_Receive", "ORDER_NO*!*LINE*!*REC_TIME*!*DATE", 256, "Order_NO@!@ORDER_NUMBER*!*LINE@!@ORDER_LINE*!*RECEIVE_DATE@!@RECEIVE_DATE*!*DATE@!@ACTUAL_RECEIVE_DATE*!*QTY_RECEIVED@!@QTY*!*REC_TIME@!@REC_TIME*!*QTY_ORDERED@!@QTY_ORDERED")
+F.ODBC.Connection!Con.Close
+F.Data.DataTable.Close("dtReceiveLines")
+
+'F.Intrinsic.Control.CallSub(FormActualReceiveDate_UnLoad)
+GUI.FormActualReceiveDate..Visible(False)
+F.Intrinsic.Control.End
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End 
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdDone_Click.End
+
+Program.Sub.ddlLine_Click.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare
+
+V.Local.iIndex.Declare(Long)
+V.Local.sSelect.Declare(String)
+
+F.Intrinsic.String.Lpad(V.Screen.FormActualReceiveDate!ddlLine.Value, "0", 3, V.Local.sSelect)
+F.Intrinsic.String.Build("LINE = '{0}'", V.Local.sSelect, V.Local.sSelect)
+F.Data.DataTable.Select("dtReceiveLines", V.Local.sSelect, V.Local.iIndex)
+GUI.FormActualReceiveDate.gsgcReceiveLines.SelectRow("gvReceiveLines", V.Local.iIndex)
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End 
+F.Intrinsic.Control.EndTry
+Program.Sub.ddlLine_Click.End
+
+
